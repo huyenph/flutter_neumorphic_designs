@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_designs/neumorphic_container.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,8 +12,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+        backgroundColor: Colors.blueGrey.shade200,
+        
         body: Center(
-          child: Text('Neumorphic'),
+          child: NeumorphicContainer(
+            child: Text('Neumorphic'),
+          ),
         ),
       ),
     );
