@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'color_utils.dart';
 
-class NeumorphicContainer extends StatefulWidget {
+class NeumorphicTextField extends StatefulWidget {
   final double width;
   final double height;
   final Color color;
   final Widget child;
 
-  NeumorphicContainer({
+  NeumorphicTextField({
     Key key,
     this.width,
     this.height,
@@ -16,10 +16,10 @@ class NeumorphicContainer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NeumorphicContainerState createState() => _NeumorphicContainerState();
+  _NeumorphicTextFieldState createState() => _NeumorphicTextFieldState();
 }
 
-class _NeumorphicContainerState extends State<NeumorphicContainer> {
+class _NeumorphicTextFieldState extends State<NeumorphicTextField> {
   bool _isPressed = false;
 
   void _onPointerDown(PointerDownEvent event) {
@@ -47,31 +47,22 @@ class _NeumorphicContainerState extends State<NeumorphicContainer> {
             width: widget.width,
             height: widget.height,
             decoration: BoxDecoration(
-              color: _isPressed ? Colors.black.withOpacity(0.075) : widget.color,
+              color: widget.color,
               borderRadius: BorderRadius.circular(100),
-              boxShadow: _isPressed
-                  ? [
-                    BoxShadow(
-                        color: Colors.grey.shade300,
-                        offset: Offset(4.0, 4.0),
-                        blurRadius: 10.0,
-                        spreadRadius: -2,
-                      ),
-                  ]
-                  : [
-                      BoxShadow(
-                        color: widget.color.mix(Colors.grey[500], .6),
-                        offset: Offset(4.0, 4.0),
-                        blurRadius: 15.0,
-                        spreadRadius: 0.5,
-                      ),
-                      BoxShadow(
-                        color: widget.color.mix(Colors.white, .4),
-                        offset: Offset(-4.0, -4.0),
-                        blurRadius: 15.0,
-                        spreadRadius: 0.5,
-                      ),
-                    ],
+              boxShadow: [
+                BoxShadow(
+                  color: widget.color.mix(Colors.black, .2),
+                  offset: Offset(-4.0, -4.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 0.5,
+                ),
+                BoxShadow(
+                  color: widget.color.mix(Colors.grey[200], .2),
+                  offset: Offset(4.0, 4.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 0.5,
+                ),
+              ],
               // gradient: _isPressed
               //     ? LinearGradient(
               //         begin: Alignment.topLeft,
