@@ -12,11 +12,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        backgroundColor: Colors.blueGrey.shade200,
-        
+        backgroundColor: Colors.blue[400],
         body: Center(
           child: NeumorphicContainer(
-            child: Text('Neumorphic'),
+            width: 200,
+            height:200,
+            color: Colors.blue[400],
+            child: Center(
+              child:Icon(Icons.cloud_circle),
+            ),
           ),
         ),
       ),

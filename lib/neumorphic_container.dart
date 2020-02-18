@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'color_utils.dart';
 
 class NeumorphicContainer extends StatefulWidget {
-  final Widget child;
-  final double bevel;
+  final double width;
+  final double height;
   final Color color;
-  final Offset blurOffset;
+  final Widget child;
 
   NeumorphicContainer({
     Key key,
-    this.child,
-    this.bevel = 10.0,
+    this.width,
+    this.height,
     this.color,
-  })  : this.blurOffset = Offset(bevel / 2, bevel / 2),
-        super(key: key);
+    this.child,
+  }) : super(key: key);
 
   @override
   _NeumorphicContainerState createState() => _NeumorphicContainerState();
@@ -31,73 +31,68 @@ class _NeumorphicContainerState extends State<NeumorphicContainer> {
   void _onPointerUp(PointerUpEvent event) {
     setState(() {
       _isPressed = false;
+      print('up');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final color = this.widget.color ?? Theme.of(context).backgroundColor;
     return Listener(
       onPointerDown: _onPointerDown,
       onPointerUp: _onPointerUp,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
+        duration: const Duration(milliseconds: 1500),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.bevel),
-            color: Colors.grey.shade200,
-            // border: Border(
-            //   top: BorderSide(width: bevel, color: Color(0xFFFFFFFFFF)),
-            //   left: BorderSide(width: bevel, color: Color(0xFFFFFFFFFF)),
-            //   right: BorderSide(width: bevel, color: Color(0xFFFF000000)),
-            //   bottom: BorderSide(width: bevel, color: Color(0xFFFF000000)),
-            // ),
-            boxShadow: _isPressed
-                ? null
-                : [
+          child: Container(
+            width: widget.width,
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: _isPressed ? Colors.black.withOpacity(0.075) : widget.color,
+              borderRadius: BorderRadius.circular(100),
+              boxShadow: _isPressed
+                  ? [
                     BoxShadow(
-                      blurRadius: widget.bevel,
-                      offset: -widget.blurOffset,
-                      color: color.mix(Colors.white, .5),
-                    ),
-                    BoxShadow(
-                      blurRadius: widget.bevel,
-                      offset: widget.blurOffset,
-                      color: color.mix(Colors.black, .3),
-                    ),
-                  ],
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomCenter,
-              colors: [
-                _isPressed ? color : color.mix(Colors.black, .1),
-                _isPressed ? color.mix(Colors.black, .05) : color,
-                _isPressed ? color.mix(Colors.black, .05) : color,
-                color.mix(Colors.white, _isPressed ? .2 : .3),
-              ],
-              stops: [
-                0.0,
-                .3,
-                .6,
-                1.0,
-              ],
+                        color: Colors.blue.shade300,
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 10.0,
+                        spreadRadius: -2,
+                      ),
+                  ]
+                  : [
+                      BoxShadow(
+                        color: widget.color.mix(Colors.black, .2),
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 0.5,
+                      ),
+                      BoxShadow(
+                        color: widget.color.mix(Colors.grey[200], .2),
+                        offset: Offset(-4.0, -4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 0.5,
+                      ),
+                    ],
+              // gradient: _isPressed
+              //     ? LinearGradient(
+              //         begin: Alignment.topLeft,
+              //         end: Alignment.bottomRight,
+              //         colors: [
+              //           widget.color.mix(Colors.black, .2),
+              //           widget.color.mix(Colors.black, .1),
+              //           widget.color.mix(Colors.grey[200], .1),
+              //           widget.color.mix(Colors.grey[200], .1),
+              //         ],
+              //         stops: [
+              //           0.1,
+              //           0.3,
+              //           0.8,
+              //           0.9,
+              //         ],
+              //       )
+              //     : null,
             ),
+            child: widget.child,
           ),
-          // child: Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
-          //   decoration: BoxDecoration(
-          //     border: Border(
-          //       top: BorderSide(width: bevel, color: Color(0xFFFFDFDFDF)),
-          //       left: BorderSide(width: bevel, color: Color(0xFFFFDFDFDF)),
-          //       right: BorderSide(width: bevel, color: Color(0xFFFF7F7F7F)),
-          //       bottom: BorderSide(width: bevel, color: Color(0xFFFF7F7F7F)),
-          //     ),
-          //     color: Color(0xFFBFBFBF),
-          //   ),
-          //   child: child,
-          // ),
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          child: widget.child,
         ),
       ),
     );
